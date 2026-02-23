@@ -1,3 +1,6 @@
+//1. Write a program that calculates the number of days in a given month using the new
+//        switch expression.
+
 import java.util.Scanner;
 
 public class One {
@@ -26,6 +29,13 @@ public class One {
             System.out.println(" Invalid month entered...!!! ");
         } else {
             System.out.println("Correct Choice...!!\n" + days);
+        }
+    }
+
+    public sealed static class Animal permits SealedClass.Dog, SealedClass.Cat {
+
+        public void makeSound() {
+            System.out.println("One.Animal makes a sound");
         }
     }
 }
