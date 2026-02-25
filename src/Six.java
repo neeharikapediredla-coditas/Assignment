@@ -2,25 +2,36 @@
 //execution using the Thread.ofVirtual().start().
 
 
-public class Six {
+public class VirtualThreadDemo {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
-        Runnable task = () -> {
-            String threadName = Thread.currentThread().getName();
-            System.out.println("Running task in: " + threadName);
-        };
+        System.out.println("Main thread: " + Thread.currentThread());
+        Thread vt1 = Thread.ofVirtual().start(() -> performTask("Task-1"));
+        Thread vt2 = Thread.ofVirtual().start(() -> performTask("Task-2"));
 
-        // Creating and starting virtual threads
-        Thread virtualThread1 = Thread.ofVirtual().start(task);
-        Thread virtualThread2 = Thread.ofVirtual().start(task);
-        Thread virtualThread3 = Thread.ofVirtual().start(task);
 
-        // Wait for all virtual threads to finish
-        virtualThread1.join();
-        virtualThread2.join();
-        virtualThread3.join();
+        try {
+            vt1.join();
+            vt2.join();
+        } 
+        catch (InterruptedException exception) {
+            Thread.currentThread().interrupt();
+            System.err.println("Thread was interrupted.");
+        }
 
-        System.out.println("All virtual threads completed execution");
+        System.out.println("All virtual threads completed.");
+    }
+    private static void performTask(String taskName) {
+        System.out.println(taskName + " started on " + Thread.currentThread());
+
+        try {
+            Thread.sleep(1000);
+        } 
+        catch (InterruptedException exception) {
+            Thread.currentThread().interrupt();
+        }
+
+        System.out.println(taskName + " completed.");
     }
 }
