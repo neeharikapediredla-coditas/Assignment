@@ -1,30 +1,35 @@
 //4. Create a sealed class hierarchy where Animal is a sealed class and Dog and Cat are
 //its permitted subclasses
 
-public class SealedClass {
-
+public class AnimalDemo {
     public static void main(String[] args) {
+        Animal dog = new Dog();
+        Animal cat = new Cat();
 
-        One.Animal dog = new Dog();
-        One.Animal cat = new Cat();
+        dog.eat();
+        ((Dog) dog).bark();
 
-        dog.makeSound();
-        cat.makeSound();
+        System.out.println();
+
+        cat.eat();
+        ((Cat) cat).meow();
     }
-
-    public static final class Dog extends One.Animal {
-
-        @Override
-        public void makeSound() {
-            System.out.println("SealedClass.Dog barks");
-        }
+}
+sealed class Animal permits Dog, Cat {
+    public void eat() {
+        System.out.println("Animal is eating.");
     }
+}
 
-    public static final class Cat extends One.Animal {
+final class Dog extends Animal {
 
-        @Override
-        public void makeSound() {
-            System.out.println("SealedClass.Cat meows");
-        }
+    public void bark() {
+        System.out.println("Dog is barking.");
+    }
+}
+
+final class Cat extends Animal {
+    public void meow() {
+        System.out.println("Cat is meowing.");
     }
 }
